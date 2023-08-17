@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <style>
+        .maincontainer {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+
+        .image {
+            width: 400px;
+            border: 1px solid;
+            border-radius: 10px;
+
+            }
+
+        .subcontainer {
+            text-align: center;
+            width: 500px;
+
+
+
+        }
+
+        .boldlogo {
+            font-size: 80px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<div class="maincontainer">
+    <div><img class="image" src="{% static 'images/_a mountain tha 0 (1).png' %}" alt=""></div>
+    <div class="subcontainer">
+
+        <div class="boldlogo">404</div>
+        <div class="message">You've run into a dead end</div>
+        <p>The page you are looking for might have been removed
+            , had its name changed,
+            or is temporarily unavailable.</p>
+        <a href="/" class="button">Go to Home Page</a>
+    </div>
+</div>
+</html>
+{% endblock %}

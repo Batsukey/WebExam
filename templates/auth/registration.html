@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% block title %}registration{% endblock %}
+{% block content %}
+    <div style="display: flex;justify-content: center;flex-direction: column;align-content: center; align-items: center">
+        <form action="{% url 'register_user' %}" style="display: flex ;margin-top: 100px; flex-direction: column" method="post">
+            <h3>Create your account</h3>
+            {% for field in form %}
+                <div class="form-group">
+                    <p>{{ field.label_tag }}</p>
+                    <p>{{ field}}</p>
+
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+            <button class="btn btn-primary" style="flex-basis: 100% ; flex-grow: 1">Register</button>
+            <div style="font-size: 12px; color:dimgrey">Already a Member? <a style="text-decoration: none ;color:darkslategray" href="{% url 'login_user' %}">Sign in</a></div>
+
+        </form>
+    </div>
+
+{% endblock %}

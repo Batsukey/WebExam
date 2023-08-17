@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}XroutS{% endblock %}
+{% block content %}
+    <div class="logo" style=" display: flex; align-items: center; flex-direction: row;margin-top: 100px; align-content: center; justify-content: center ">
+    <h1 style="font-size: 40px">XroutS</h1>
+    <img style='max-width: 100px'src="{% static 'images/XroutS.png' %}" alt="">
+    </div>
+    <div style="display: flex; align-items: center ; flex-direction: column"><h3 style="margin-bottom: 20px">A new adventure awaits</h3>
+        <a href="{% url 'login_user' %}"><button class="btn btn-primary">Login</button></a>
+        <div>OR</div>
+        <a href="{% url 'register_user' %}"><button class="btn btn-primary">Register</button></a>
+
+    </div>
+
+
+
+{% endblock %}

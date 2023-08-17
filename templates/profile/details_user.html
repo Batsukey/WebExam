@@ -1,0 +1,7 @@
+{% extends 'base/base.html' %}
+{% block title %}
+{{ full_name }}'s Activity Page
+{% endblock %}
+{% block content %}
+    {{ userprofile.profile_picture.url }}
+{% endblock %}

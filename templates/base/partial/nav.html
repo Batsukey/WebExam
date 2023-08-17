@@ -1,0 +1,54 @@
+{% load static %}
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <!-- Link to Home Page -->
+            <a href="{% url 'index' %}">
+                <img width="50px" src="{% static 'images/XroutS.png' %}" alt="img1">
+            </a>
+
+            <!-- Link to Home Page -->
+            <a class="hom_a" href="{% url 'index' %}">
+                <i class="nav_i">XROUTS</i>
+            </a>
+        </div>
+        {#        from here starts profile user#}
+        {% if user.is_authenticated %}
+
+            <nav class="navbar">
+                <div class="notifications">
+                    <a href="#">
+                        <span class="bell-icon"><i class="fas fa-bell"></i></span>
+                    </a>
+                </div>
+                <div class=navbar-dropdown>
+                    <div class="profile-container">
+                        <div class="profile-icon right-arrow">
+                            {% if user.userprofile.profile_picture %}
+                            <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Photo">
+                            {% else %}
+                                <img src="{% static 'images/6859343.png' %}" alt="Profile Photo">
+                                {% endif %}
+                        </div>
+                        {#                    <span class="arrow-down">&#9660;</span>#}
+                        <div class="dropdown-content wider-dropdown">
+                            <a href="{% url 'profile_details'  athlete_slug=user.userprofile.slug %}">My Profile</a>
+                            <a href="{% url 'logout_user' %}">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="create-activity">
+                    <a href="{% url 'create_activity' %}">
+                        <span class="plus-icon"><i class="fas fa-plus"></i></span>
+                    </a>
+                </div>
+
+            </nav>
+        {% endif %}
+
+
+        </ul>
+    </div>
+    </div>
+</nav>
+<script src="{% static 'js/base.js' %}"></script>

@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+label {
+    width: 100px;
+}
+header {
+    position: fixed;
+    z-index: 100000;
+
+    align-items: center;
+    justify-content: center;
+    background: rgb(255, 255, 255);
+    width: 100%;
+    border: 1px solid rgb(218, 217, 217);
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*background-color: #333;*/
+    padding: 10px;
+
+
+}
+.container1{
+
+    max-width: 740px;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+}
+  @media (min-width: 576px){
+.container1{
+  max-width: 940px;
+    min-width: 576px
+}}
+
+
+main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     padding-top: 100px; /* Adjust the value as needed */
+
+}
+.activity{
+    background: #f4f4f4;
+}
+li {
+    list-style: none;
+}
+
+
+.create {
+    display: block;
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(156, 152, 152);
+	padding: 20px;
+	margin-bottom: 15px;
+	border-radius: 3px;
+	border: 1px solid;
+	box-shadow: 1px 2px 3px #888888;
+}
+.create input{
+	background-color: aliceblue ;
+}
+#id_picture{
+    background-color: white;
+}
+
+.activity-main {
+    width: 65%;
+    margin: 5% auto;
+    margin-bottom: -20px;
+}
+#title {
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.activity{
+    margin-bottom: 5px;
+    position: relative;
+    width: 100%;
+    /* min-height: 400px; */
+    display: inline-block;
+    border: 1px solid rgba(7, 7, 7, 0.24);
+    min-height: 200px;
+}
+.top {
+    display: flex;
+    padding: 5px;
+}
+.name-time{
+    display: flex;
+    flex-direction: column;
+}
+
+.timestamp {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.edit-delete {
+    font-size:35px;
+    color: darkslateblue;
+    padding: 5px;
+    margin: 5px;
+}
+.stats {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.stat{
+    display: flex;
+    justify-content: space-evenly;
+}
+.each{
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-image{
+    padding: 10px;
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    margin: 10px 0 15px;
+}
+#bg{
+    background-size: 1800px 900px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: fixed;}
+.img {
+    background-image: url("https://i.imgur.com/84aNRnQ.jpg");
+}
+
+.bell-icon{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    color: darkslateblue;
+    margin-right: 30px;
+}
+.wider-dropdown {
+    width: 100px; /* Adjust the width to your preference */
+}
+.dropdown-content {
+    display: block;
+    right: 0px; /* Add this line */
+}
+
+
+.bell-icon:hover {
+    border: 1px solid;
+    border-radius: 50%;
+    background-color: deepskyblue;
+    color: white;
+    border-color: deepskyblue;
+    cursor: pointer;
+}
+/* Styles for the "+" icon */
+.plus-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    color: darkslateblue;
+}
+
+/* Styles for the hover effect */
+.plus-icon:hover {
+    border: 1px solid;
+    border-radius: 50%;
+    background-color: deepskyblue;
+    color: white;
+    border-color: deepskyblue;
+    cursor: pointer;
+}
+
+.profile-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+
+.profile-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+.navbar-dropdown {
+    display: flex;
+    flex-direction: row;
+}
+.navbar-dropdown :hover {
+    cursor: pointer;
+    display: block;
+    border-left: 1px solid #ccc; /* Add left border */
+    border-right: 1px solid #ccc; /* Add right border */ /* Add rounded corners at the bottom */
+
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-top: none;
+    display: none;
+}
+.hom_a {
+    text-decoration: none;
+
+}
+.nav_i {
+    font-size: 20px;
+    font-style: normal;
+    text-decoration: darkslateblue;
+    color: darkslateblue;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-content a:hover {
+    background-color: #f4f4f4;
+}
+
+.profile-container:hover .dropdown-content {
+    display: block;
+}
+

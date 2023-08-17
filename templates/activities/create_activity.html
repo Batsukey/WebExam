@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+    <div>
+    <h1 style="display:flex;color:darkslateblue;margin-bottom: 40px;justify-content: center;">Manual Upload</h1>
+    <div style="display: flex;flex-direction: row;justify-content: center;align-items: center">
+
+     <a href="{% url 'running_activity' %}"style="text-decoration: none" ><div class="logo" style="display: flex;flex-direction: column;align-items: center">
+
+    <img style='max-width: 180px;'src="{% static 'images/sm_5b29c1e34b79a.png' %}" alt="">
+         <h2 style="font-size: 30px;color:darkslateblue;">Running</h2>
+    </div></a>
+    <a href="{% url 'cycling_activity' %}"style="text-decoration: none"><div class="logo" style="display: flex;flex-direction: column;align-items: center">
+
+    <img style='max-width: 180px;'src="{% static 'images/pngegg.png' %}" alt="">
+        <h2 style="font-size: 30px;color:deepskyblue">Cycling</h2>
+    </div></a>
+<a href="{% url 'swimming_activity' %}"style="text-decoration: none"><div class="logo" style="display: flex;flex-direction: column;align-items: center">
+
+    <img style='max-width: 180px;'src="{% static 'images/swimming-icon-png-3757.png' %}" alt="">
+    <h2 style="font-size: 30px">Swimming</h2>
+</div></a>
+    </div>
+    </div>
+{% endblock %}
+

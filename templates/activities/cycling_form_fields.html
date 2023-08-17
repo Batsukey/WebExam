@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+{% block title %}Activities{% endblock %}
+{% block content %}
+    <div class="create"><form action="{% url 'cycling_activity' %}" method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button class="btn btn-primary">Create</button>
+
+    </form></div>
+{% endblock %}
