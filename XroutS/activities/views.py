@@ -52,8 +52,6 @@ class CreateCyclingActivity(LoginRequiredMixin,gen_views.CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-
-        # Create an AllActivities instance and link it to the RunningActivity
         return super().form_valid(form)
 
 class ActivitiesFeedView(LoginRequiredMixin, gen_views.ListView):
@@ -114,7 +112,7 @@ def edit_activity(request, activity_type, id):
     activity = get_object_or_404(model, pk=id, user=request.user)
 
     if request.method == 'POST':
-        form = forms(request.POST, instance=activity)
+        form = forms(request.POST,request.FILES, instance=activity)
         if form.is_valid():
             form.save()
             return redirect('activity_feed')

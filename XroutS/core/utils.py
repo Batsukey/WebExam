@@ -2,9 +2,6 @@
 import random
 
 
-# def get_user_by_slug(user_slug):
-#     # TODO fix username when autherazation
-#     return AppUser.objects.get(slug=user_slug)
 
 def generate_random_number():
     return random.randint(1000, 9999)

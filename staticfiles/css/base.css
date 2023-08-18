@@ -86,6 +86,13 @@ li {
     margin-top: 10px;
     margin-left: 5px;
 }
+.road {
+    margin-top: -10px;
+    margin-left: 5px;
+    font-style: italic;
+    font-size: 14px;
+
+}
 
 .activity{
     margin-bottom: 5px;
@@ -137,8 +144,10 @@ li {
     padding: 10px;
     position: relative;
     width: 100%;
-    min-height: 500px;
+    height: 100%;
+    max-height: 350px;
     margin: 10px 0 15px;
+    object-fit: cover;
 }
 #bg{
     background-size: 1800px 900px;

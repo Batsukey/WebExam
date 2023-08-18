@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% block title %}Activities{% endblock %}
 {% block content %}
-    <div class="create">
+    <div class="create"><h2 style="font-size: 30px;color:darkslateblue;display: flex;justify-content: center">Swimming</h2>
     <form action="{% url 'swimming_activity' %}" method="post" enctype="multipart/form-data">
         {{ form.as_p }}
         {% csrf_token %}

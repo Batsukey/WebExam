@@ -11,18 +11,32 @@
                 <li>
                     <div class="activity-main">
                         <div class="activity">
-                            <div class="top">
-                                <div class="profile-icon">
-                                    {% if user_picture %}
-                                        <img src="{{ user_picture.url }}" alt="Profile Photo">
-                                    {% else %}
-                                        <img src="{% static 'images/6859343.png' %}" alt="Profile Photo">
-                                    {% endif %}
+                            <div class="sup-top" style="display: flex;justify-content: space-between">
+                                <div class="top">
+                                    <div class="profile-icon">
+                                        {% if user_picture %}
+                                            <a href="{% url 'profile_details' athlete_slug=user.userprofile.slug%}"><img src="{{ user_picture.url }}" alt="Profile Photo"></a>
+                                        {% else %}
+                                            <a href="{% url 'profile_details' athlete_slug=user.userprofile.slug%}"><img src="{% static 'images/6859343.png' %}" alt="Profile Photo"></a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="name-time">
+                                        <div>{{ user_full_name }}</div>
+                                        <div>{{ combined_activity.timestamp }}</div>
+                                    </div>
                                 </div>
-                                <div class="name-time">
-                                    <div>{{ user_full_name }}</div>
-                                    <div>{{ combined_activity.timestamp }}</div>
-                                </div>
+                                <div><a class="edit-delete" style="font-size:20px;
+    color: darkslateblue;
+    padding: 3px;
+    margin: 3px;" href="{% url 'delete_activity' combined_activity.activity_type combined_activity.id %}"
+                                        onclick="return confirm('Are you sure you want to delete this activty?');"><i
+                                        class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a class="edit-delete" style="font-size:20px;
+    color: darkslateblue;
+    padding: 3px;
+    margin: 3px;"
+                                       href="{% url 'edit_activity' combined_activity.activity_type combined_activity.id %}"><i
+                                            class="fas fa-edit"></i></a></div>
                             </div>
                             <h2 id="title">{{ combined_activity.title }}</h2>
 
@@ -47,7 +61,7 @@
                                     </div>
                                 </div>
                             {% elif combined_activity.activity_type == 'Cycling' %}
-
+                                <div class="road">Location : {{ combined_activity.route }}</div>
 
 
 
@@ -65,6 +79,7 @@
                                         <div>Time:</div>
                                         <h5>{{ combined_activity.duration }}</h5>
                                     </div>
+
                                 </div>
 
                             {% elif combined_activity.activity_type == 'Swimming' %}
@@ -88,18 +103,7 @@
                             {% if combined_activity.picture %}
                                 <img class="activity-image" src="{{ combined_activity.picture.url }}" alt="">
                             {% endif %}
-                            <a class="edit-delete" style="font-size:20px;
-    color: darkslateblue;
-    padding: 3px;
-    margin: 3px;" href="{% url 'delete_activity' combined_activity.activity_type combined_activity.id %}"
-                               onclick="return confirm('Are you sure you want to delete this activty?');"><i
-                                    class="fa fa-trash" aria-hidden="true"></i></a>
-                            <a class="edit-delete" style="font-size:20px;
-    color: darkslateblue;
-    padding: 3px;
-    margin: 3px;"
-                               href="{% url 'edit_activity' combined_activity.activity_type combined_activity.id %}"><i
-                                    class="fas fa-edit"></i></a>
+
                         </div>
                     </div>
 

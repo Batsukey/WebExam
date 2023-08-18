@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h2 >Cycling</h2>
+  <div class="create"><h1 style="font-size: 30px;color:darkslateblue;display: flex;justify-content: center">Edit {{ form.instance.get_activity_type }} Activity</h1>
+      <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+      <br> <a style="text-decoration: none"href="{% url 'activity_feed' %}"> <button class="btn btn-primary">Back to Feed</button> </a></div>
+
+
+{% endblock %}
