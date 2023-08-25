@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar">
+<nav class="navbar" style="background-color: whitesmoke">
     <div class="container">
         <div class="logo">
             <!-- Link to Home Page -->
@@ -25,12 +25,13 @@
                     <div class="profile-container">
                         <div class="profile-icon right-arrow">
                             {% if user.userprofile.profile_picture %}
-                            <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Photo">
+                                <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Photo">
                             {% else %}
                                 <img src="{% static 'images/6859343.png' %}" alt="Profile Photo">
-                                {% endif %}
+                            {% endif %}
                         </div>
-                        {#                    <span class="arrow-down">&#9660;</span>#}
+                        {#                <span class="arrow-down">&#9660;</span>#}
+
                         <div class="dropdown-content wider-dropdown">
                             <a href="{% url 'profile_details'  athlete_slug=user.userprofile.slug %}">My Profile</a>
                             <a href="{% url 'profile_update' %}">Edit Profile</a>
@@ -38,11 +39,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="create-activity">
-                    <a href="{% url 'create_activity' %}">
-                        <span class="plus-icon"><i class="fas fa-plus"></i></span>
-                    </a>
-                </div>
+
+                    <div class="profile-container">
+
+                            <div class="create-activity">
+                                <span class="plus-icon"><i class="fas fa-plus"></i></span>
+                                <div class="dropdown-content wider-dropdown">
+                                    <a href="{% url 'create_activity' %}"><i class="fa fa-upload" aria-hidden="true"></i>
+Manual upload</a>
+                                    <a href="{% url 'gps_upload' %}"><i class="fa fa-map-o" aria-hidden="true"></i>
+GPX upload</a>
+
+                                </div>
+                            </div>
+
+                    </div>
+
 
             </nav>
         {% endif %}

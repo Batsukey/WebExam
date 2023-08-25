@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Activity Map
+{% endblock %}
+
+{% block content %}
+<div class="activity-map">
+    {% for activity in activities %}
+    <div class="activity-card">
+        <h2>{{ activity.name }}</h2>
+        <p>{{ activity.distance }}</p>
+        <p>{{ activity.duration }}</p>
+        <p>{{ activity.pace }}</p>
+        <!-- Embed the map here -->
+        <div id="map_{{ activity.id }}" class="activity-map-container"></div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+// Loop through activities and create Folium maps
+    <h1>Activity Map</h1>
+    <div id="map" style="width: 300px; height: 300px;"></div>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha384-KyZXEAg3QhqLMpG8r+U07IV62vSpVjU+Kx2f6dH93Lsd7x7ugIbbVYUew+OrCXaR" crossorigin="anonymous">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha384-1BuJ2DjJIZxg+sXwoVZvZF4I9HVHKDfgzHBUQINzFqizNAq5P4r7bTtFz+7W2F2j" crossorigin="anonymous"></script>
+    <script>
+        var map = L.map('map').setView([42.138728, 24.790614], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Add markers for GPS data points
+         var gpsCoordinates = [
+            {% for data in gps_data %}
+                [{{ data.latitude }}, {{ data.longitude }}],
+            {% endfor %}
+        ];
+        L.polyline(gpsCoordinates, {
+            color: 'red',
+        }).addTo(map);
+    </script>
+{% endblock %}

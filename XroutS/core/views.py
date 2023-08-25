@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import request
+from django.http import request, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import views as auth_views, get_user_model, login, authenticate
 from django.contrib.auth import forms as auth_forms
@@ -66,14 +67,14 @@ class HomePageView(views.TemplateView):
         return super().get_template_names()
 
 
-class ActivityFeedView(views.CreateView):
+class ActivityFeedView(LoginRequiredMixin,views.CreateView):
     template_name = 'activity_feed.html'
 
 class LoginView(auth_views.LoginView):
     template_name = 'auth/login.html'
     success_url = reverse_lazy('activity_feed')
 
-class ProfileEditView(views.View):
+class ProfileEditView(LoginRequiredMixin,views.View):
     template_name = 'profile/profile_form.html'
     slug_field = 'athlete_slug'
     def get(self, request,athlete_slug):
@@ -150,7 +151,7 @@ class LogOutView(auth_views.LogoutView):
     template_name = 'auth/logout.html'
     success_url = reverse_lazy('activity_feed')
 
-class AthleteDetailsPage(views.View):
+class AthleteDetailsPage(LoginRequiredMixin,views.View):
     template_name = 'profile/details_user.html'
     def get(self, request, athlete_slug):
         user = get_object_or_404(UserModel,userprofile__slug=athlete_slug)
@@ -161,10 +162,13 @@ class AthleteDetailsPage(views.View):
             user_profile = None
 
         full_name = f"{user_profile.first_name} {user_profile.last_name}" if user_profile else ""
-
+        followers_count = user_profile.get_followers_count()
+        following_count = user_profile.get_following_count()
         context = {
             'picture': user_profile.profile_picture,
             'full_name': full_name,
+            'followers': followers_count,
+            'following': following_count,
         }
 
         return render(request, self.template_name, context)
@@ -175,3 +179,17 @@ class Custom404View(views.View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, status=404)
+@login_required
+def follow_user(request, username):
+    user_to_follow = get_object_or_404(UserModel, username=username)
+    user_profile_to_follow = user_to_follow.userprofile
+    request.user.userprofile.following.add(user_profile_to_follow)
+    return JsonResponse({'status': 'success'})
+
+@login_required
+def unfollow_user(request, username):
+    user_to_unfollow = get_object_or_404(UserModel, username=username)
+    user_profile_to_unfollow = user_to_unfollow.userprofile
+    request.user.userprofile.following.remove(user_profile_to_unfollow)
+    return JsonResponse({'status': 'success'})
+

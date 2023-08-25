@@ -23,20 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv('DB_NAME', None),
-        "USER": os.getenv('DB_USER', None),
-        "PASSWORD": os.getenv('DB_PASSWORD', None),
-        "HOST": os.getenv('DB_HOST', None),
+        "NAME": os.getenv('DB_NAME', 'XroutS-database'),
+        "USER": os.getenv('DB_USER', 'postgres-user'),
+        "PASSWORD": os.getenv('DB_PASSWORD', 'taralej1'),
+        "HOST": os.getenv('DB_HOST', '127.0.0.1'),
         "PORT": os.getenv('DB_PORT', '5432'),
     }
 }
+
 
 # Application definition
 
@@ -48,7 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'XroutS.core',
-    'XroutS.activities'
+    'XroutS.activities',
+    'XroutS.functionalities',
+
 ]
 
 MIDDLEWARE = [

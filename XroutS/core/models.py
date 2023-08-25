@@ -107,11 +107,20 @@ class UserProfile(models.Model):
 
     slug = models.SlugField(unique=True, editable=False)
 
+    followers = models.ManyToManyField(UserModel, related_name='followers', blank=True)
+    following = models.ManyToManyField(UserModel, related_name='following', blank=True)
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if not self.slug:
             self.slug = slugify(f'{self.user_id}{generate_random_number()}')
             return super().save(*args, **kwargs)
+
+    def get_followers_count(self):
+        return self.followers.count()
+
+    def get_following_count(self):
+        return self.following.count()
 
 
     objects = models.Manager()

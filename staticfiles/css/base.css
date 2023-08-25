@@ -22,7 +22,7 @@ header {
     justify-content: center;
     align-items: center;
     /*background-color: #333;*/
-    padding: 10px;
+    padding: 3px;
 
 
 }
@@ -53,13 +53,27 @@ main {
 
 }
 .activity{
-    background: #f4f4f4;
+    background: white;
 }
 li {
     list-style: none;
 }
 
-
+.gps-upload ::file-selector-button{
+    background-color: lightblue;
+    color: white;
+    padding: 2px;
+    border: lightblue solid;
+    border-radius: 5px;
+}
+.gps-upload ::file-selector-button:hover{
+    background-color: lightskyblue;
+    color: white;
+    padding: 2px;
+    border: lightskyblue solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
 .create {
     display: block;
 	background-color: rgb(255, 255, 255);
@@ -83,8 +97,21 @@ li {
     margin-bottom: -20px;
 }
 #title {
-    margin-top: 10px;
-    margin-left: 5px;
+    margin-top: 0px;
+    margin-left: 75px;
+    font-size: 24px;
+}
+.sidebar {
+    width: 250px;
+    background-color: #f1f1f1;
+    float: left;
+    height: 100%; /* Full height sidebar */
+}
+
+/* Styles for the main content */
+.main-content {
+    margin-left: 250px; /* Adjust based on sidebar width */
+    padding: 20px;
 }
 .road {
     margin-top: -10px;
@@ -124,6 +151,19 @@ li {
     padding: 5px;
     margin: 5px;
 }
+
+.gps-upload
+    {
+    display: block;
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(156, 152, 152);
+	padding: 20px;
+	margin-bottom: 15px;
+	border-radius: 3px;
+	border: 1px solid;
+	box-shadow: 1px 2px 3px #888888;
+}
+
 .stats {
     padding: 10px 20px;
     display: flex;
@@ -170,11 +210,11 @@ li {
     margin-right: 30px;
 }
 .wider-dropdown {
-    width: 100px; /* Adjust the width to your preference */
+    width: 150px; /* Adjust the width to your preference */
 }
 .dropdown-content {
     display: block;
-    right: 0px; /* Add this line */
+    right: 2px; /* Add this line */
 }
 
 

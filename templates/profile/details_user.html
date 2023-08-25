@@ -1,7 +1,19 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% block title %}
 {{ full_name }}'s Activity Page
 {% endblock %}
 {% block content %}
-    {{ userprofile.profile_picture.url }}
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <div class="sidebar">
+        <div class="profile-icon right-arrow">
+                            {% if picture.url %}
+                                <img src="{{ picture.url }}" alt="Profile Photo">
+                            {% else %}
+                                <img src="{% static 'images/6859343.png' %}" alt="Profile Photo">
+                            {% endif %}
+
+                        </div>
+    </div>
 {% endblock %}

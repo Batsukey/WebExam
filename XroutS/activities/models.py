@@ -4,6 +4,7 @@ from django.db import models
 from datetime import timedelta
 
 from XroutS.core.models import AppUser
+from XroutS.functionalities.models import Like
 
 UserModel = get_user_model()
 
@@ -42,6 +43,10 @@ class BaseActivity(models.Model):
     distance = models.FloatField()
     duration = models.DurationField()
     title = models.CharField(max_length=30)
+    likes = models.ManyToManyField(Like, blank=True)
+
+    def total_likes(self):
+        return self.likes.count()
 
     class Meta:
         abstract = True
@@ -79,15 +84,29 @@ class SwimmingActivity(BaseActivity):
 
     def get_activity_type(self):
         return 'Swimming'
+1
+class ActivityData(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    type = models.CharField()
+    name = models.CharField()
+    distance = models.CharField()
+    duration = models.CharField()
+    pace = models.CharField()
 
 class GPSData(models.Model):
+    activity = models.ForeignKey(ActivityData, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
     latitude = models.FloatField()
     longitude = models.FloatField()
     elevation = models.FloatField()
+    hr = models.FloatField(null=True)
+    distance = models.FloatField(null=True)
+    cadance = models.FloatField(null=True)
 
 
     # def __str__(self):
     #     return f"{self.user.name} - {self.timestamp}"
+
+
 
