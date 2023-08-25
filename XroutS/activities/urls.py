@@ -1,7 +1,8 @@
 from django.urls import path, include
 
 from XroutS.activities.views import CreateActivity, ActivitiesFeedView, CreateRunningActivity, \
-    CreateSwimmingActivity, CreateCyclingActivity, UploadGPXView, map_view, delete_activity, edit_activity
+    CreateSwimmingActivity, CreateCyclingActivity, UploadGPXView, map_view, delete_activity, edit_activity, \
+    ActivityMapView
 
 urlpatterns = [
     path('upload/',include([
@@ -14,6 +15,7 @@ urlpatterns = [
     path('activity/<str:activity_type>/<int:id>/delete/',delete_activity,name='delete_activity'),
     path('activity/<str:activity_type>/<int:id>/edit/',edit_activity,name='edit_activity'),
     # path('activityfeed/', running_map, name='running_map'),
+    path('activity/404/',ActivityMapView.as_view(),name='gpx_view'),
     path('map/', map_view,name='map'),
     #
 ]

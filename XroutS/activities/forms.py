@@ -1,6 +1,6 @@
 from django import forms
 
-from XroutS.activities.models import RunningActivity, GPSData, SwimmingActivity, CyclingActivity
+from XroutS.activities.models import RunningActivity, GPSData, SwimmingActivity, CyclingActivity, ActivityData
 from XroutS.core.models import UserProfile
 
 class CyclingActivityForm(forms.ModelForm):
@@ -24,7 +24,12 @@ class SwimmingActivityForm(forms.ModelForm):
 class GPSDataUploadForm(forms.ModelForm):
     class Meta:
         model = GPSData
-        fields = ['timestamp', 'latitude', 'longitude', 'elevation']
+        fields = ['timestamp', 'latitude', 'longitude', 'elevation', 'hr', 'distance', 'cadance','activity']
 
 class GPXFileUploadForm(forms.Form):
     gpx_file = forms.FileField(label='Upload GPX File')
+
+class ActivityDataForm(forms.ModelForm):
+    class Meta:
+        model=ActivityData
+        fields=['duration','distance','pace']

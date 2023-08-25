@@ -1,11 +1,11 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-
+<div class="gps-upload">
 <form method="post" enctype="multipart/form-data" action="{% url "gps_upload" %}">
     {% csrf_token %}
     {{ gpx_form.as_p}}
     <button type="submit">Upload GPX File</button>
 </form>
-
+</div>
 {% endblock %}

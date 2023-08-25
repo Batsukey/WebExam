@@ -1,6 +1,9 @@
+import math
+
 import folium
 from itertools import chain
-
+import matplotlib.pyplot as plt
+import pandas as pd
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, get_object_or_404
@@ -8,8 +11,8 @@ from django.urls import reverse_lazy
 from django.views import generic as gen_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from XroutS.activities.forms import GPXFileUploadForm, SwimmingActivityForm, CyclingActivityForm, \
-    RunningActivityForm
-from XroutS.activities.models import RunningActivity, GPSData, CyclingActivity, SwimmingActivity
+    RunningActivityForm, ActivityDataForm
+from XroutS.activities.models import RunningActivity, GPSData, CyclingActivity, SwimmingActivity, ActivityData
 from XroutS.core.models import UserProfile
 import gpxpy
 from django.shortcuts import render, redirect
@@ -18,6 +21,8 @@ from datetime import datetime, timedelta
 from lxml import etree
 from django.views.generic import View
 from django.http import HttpResponse
+
+from .utils import calculate_distance
 
 # Create your views here.
 UserModel = get_user_model()
@@ -152,26 +157,107 @@ class UploadGPXView(LoginRequiredMixin, View):
                 filtered_data = []
 
                 for track in gpx.tracks:
+                    name_and_data_ofactivity = {
+                        'name': track.name,
+                        'type': track.type
+                    }
+
                     for segment in track.segments:
                         for point in segment.points:
-                            # Filtering logic - adjust as needed
-                            if point.time.second % 30 == 0:
-                                filtered_data.append({
-                                    'timestamp': point.time,
-                                    'latitude': point.latitude,
-                                    'longitude': point.longitude,
-                                    'elevation': point.elevation,
-                                })
+                            extensions = point.extensions
+
+                            heart_rate = None
+                            distance = None
+                            cadence = None
+                            power = None
+
+                            for extension in extensions:
+                                # Extract extension values from the <gpxtpx:TrackPointExtension> section
+                                if 'TrackPointExtension' in extension.tag:
+                                    for child in extension:
+                                        if child.tag.endswith('hr'):
+                                            heart_rate = child.text
+                                        elif child.tag.endswith('cad'):
+                                            cadence = child.text
+                                        elif child.tag.endswith('power'):
+                                            power = child.text
+
+                            # Rest of your existing code
+                            filtered_data.append({
+                                'timestamp': point.time,
+                                'latitude': point.latitude,
+                                'longitude': point.longitude,
+                                'elevation': point.elevation,
+                                'hr': heart_rate,
+                                'distance': distance,
+                                'cadance': cadence,
+                                'power': power,
+                            })
+                df = pd.DataFrame(filtered_data)
+                print(df)
+                distances = []
+                durations = []
+                for i in range(1, len(df)):
+                    distance = calculate_distance(df['latitude'][i], df['longitude'][i],
+                                                  df['latitude'][i - 1], df['longitude'][i - 1])
+                    duration = (df['timestamp'][i] - df['timestamp'][i - 1]).seconds
+                    distances.append(distance)
+                    durations.append(duration)
+
+                # Insert 0 for the first row
+                distances.insert(0, 0)
+                durations.insert(0, 0)
+
+                df['distance'] = distances
+                df['duration'] = durations
+
+                # Calculate pace (time per distance) in seconds per meter
+                df['pace'] = df['duration'] / df['distance']
+
+                # Convert pace to minutes per kilometer, handling NaN values
+                df['pace'] = df.apply(
+                    lambda row: pd.Timedelta(seconds=row['pace']).seconds / 60 / 1000 if not math.isnan(
+                        row['pace']) else 0, axis=1)
+
+                # Calculate cumulative distance in kilometers
+                df['cumulative_distance'] = df['distance'].cumsum()
+                df['cumulative_duration'] = df['duration'].cumsum()
+                df['pace_per_km'] = df['duration'] / (df['cumulative_distance'] / 1000)
+                total_distance = df['cumulative_distance'].iloc[-1]
+                total_duration = df['cumulative_duration'].iloc[-1]
+                average_pace = total_duration / (total_distance / 1000 * 60)
+                average_pace_seconds = (average_pace - math.floor(average_pace)) * 100
+
+
+                name = name_and_data_ofactivity['name']
+                type = name_and_data_ofactivity['type']
+
+                activity = ActivityData.objects.create(
+                    distance=f'{(total_distance / 1000):.2f}km',
+                    duration=f'{total_duration // 60}:{total_duration % 60}m/s',
+                    pace=f'{average_pace:.0f}:{average_pace_seconds:.0f} /km',
+                    name= name,
+                    type= type,
+                    user=request.user,
+
+                )
+
+
 
                 # Insert filtered data into the database
                 try:
+
                     for data_point in filtered_data:
                         gps_data = GPSData.objects.create(
                             user=request.user,
+                            activity=activity,
                             timestamp=data_point['timestamp'],
                             latitude=data_point['latitude'],
                             longitude=data_point['longitude'],
-                            elevation=data_point['elevation']
+                            elevation=data_point['elevation'],
+                            hr=data_point['hr'],
+                            distance=data_point['distance'],
+                            cadance=data_point['cadance']
                         )
                     messages.success(request, 'GPX data uploaded successfully.')
                 except Exception as e:
@@ -185,6 +271,8 @@ class UploadGPXView(LoginRequiredMixin, View):
 
 
 def map_view(request):
+    activities = ActivityData.objects.filter(user=request.user)
+
     # Retrieve GPS data from the database
     gps_data = GPSData.objects.filter(user=request.user)
 
@@ -221,5 +309,22 @@ def map_view(request):
         map_html = my_map._repr_html_()
 
         return render(request, 'map.html', {'map_html': map_html})
+
     else:
         return render(request, 'map.html', {'map_html': ''})
+
+from io import BytesIO
+import base64
+class ActivityMapView(View):
+    template_name = 'activities/activity.html'
+
+    def get(self, request, *args, **kwargs):
+        # Fetch all activities with related GPS data
+        activities = ActivityData.objects.filter(user=request.user)
+        gps_data = GPSData.objects.filter(user=request.user)
+        print(activities.values())
+        context = {
+            'activities': activities,
+            'gps_data': gps_data
+        }
+        return render(request, self.template_name, context)
