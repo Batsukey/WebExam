@@ -1,4 +1,4 @@
-Project Name - Web Project README
+Project Name - XroutS
 Table of Contents
 
     Project Overview
@@ -19,7 +19,7 @@ Features
 
 Installation
 
-    Open the requirment.txt which hsa
+    Open the requirment.txt
     Works with PostgreSQL
 
 Usage
