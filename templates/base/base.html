@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
           crossorigin=""/>
@@ -24,13 +24,14 @@
 
 
 </head>
+{% block header %}
+
 
 <header>
     {% include 'base/partial/nav.html' %}
 </header>
-<div class="img"
-     style="background-color: #f1f1f1">
-    <body id="bg">
+{% endblock %}
+    <body>
 
     {#{% if request.user.is_authenticated %}#}
     {#    <div><a href="{% url 'logout_user' %}" class="btn btn-primary">Logout</a></div>#}
@@ -45,5 +46,8 @@
         {% endblock %}
     </main>
     </body>
-</div>
+{% block footer %}
+
+{% endblock %}
+
 </html>

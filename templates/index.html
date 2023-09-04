@@ -1,18 +1,51 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}XroutS{% endblock %}
+{% block header %}
+<div style="height: 50px ;width :200px ;margin-top: 10px"><img style='width: 100%' src="{% static 'images/Screenshot 2023-08-28 at 23-52-07 Logo Maker Used By 2.3 Million Startups.png' %}" alt=""></div>
+{% endblock %}
 {% block content %}
-    <div class="logo" style=" display: flex; align-items: center; flex-direction: row;margin-top: 100px; align-content: center; justify-content: center ">
-    <h1 style="font-size: 40px">XroutS</h1>
-    <img style='max-width: 100px'src="{% static 'images/XroutS.png' %}" alt="">
-    </div>
-    <div style="display: flex; align-items: center ; flex-direction: column"><h3 style="margin-bottom: 20px">A new adventure awaits</h3>
-        <a href="{% url 'login_user' %}"><button class="btn btn-primary">Login</button></a>
-        <div>OR</div>
-        <a href="{% url 'register_user' %}"><button class="btn btn-primary">Register</button></a>
-
-    </div>
+    <div style="display: flex; flex-direction: row;margin-top: -100px">
+        <div class="image-container" style="width: 450px ; min-width: 400px"><img
+                        style='width: 100%' src="{% static 'images/xrouts1.png' %}" alt=""></div>
+        <div style="display: flex;flex-direction: column">
 
 
 
+
+
+                    <div>
+                        <div class="logo"
+                             style=" display: flex; align-items: center; flex-direction: row;margin-bottom: 50px; align-content: center; justify-content: center ">
+
+                            <img style='max-width: 100px' src="{% static 'images/XroutS.png' %}" alt="">
+                        </div>
+                    </div>
+                        <h3 class="login-register"
+                                style=" height: 50px;padding: 5px ;min-width: 300px">A new adventure awaits</h3>
+                        <div style="padding: 50px;min-width: 300px" >
+
+                        <div style="display: flex; align-items: center ; flex-direction: column">
+                            <a href="{% url 'login_user' %}">
+                                <button class="btn btn-primary" id='login-btn'>Login</button>
+                            </a>
+                            <div>OR</div>
+                            <a href="{% url 'register_user' %}">
+                                <button class="btn btn-primary" id='register-btn'style="flex-basis: 100%">Register</button>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+
+        <div class="image-container" style="width: 450px ;min-width: 400px;"><img
+                        style='width: 100%' src="{% static 'images/xrouts2.png' %}" alt=""></div>
+        </div>
+
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'base/partial/footer.html' %}
 {% endblock %}

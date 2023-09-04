@@ -17,5 +17,6 @@ urlpatterns = [
     # path('activityfeed/', running_map, name='running_map'),
     path('activity/404/',ActivityMapView.as_view(),name='gpx_view'),
     path('map/', map_view,name='map'),
+    # path('activity1/',activity_view,name='activity')
     #
 ]

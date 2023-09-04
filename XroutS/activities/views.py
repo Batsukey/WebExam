@@ -1,5 +1,6 @@
+import io
 import math
-
+from django.core.files import File
 import folium
 from itertools import chain
 import matplotlib.pyplot as plt
@@ -157,10 +158,16 @@ class UploadGPXView(LoginRequiredMixin, View):
                 filtered_data = []
 
                 for track in gpx.tracks:
-                    name_and_data_ofactivity = {
+                    if track.type:
+                        name_and_data_ofactivity = {
                         'name': track.name,
                         'type': track.type
-                    }
+                        }
+                    else:
+                        name_and_data_ofactivity = {
+                            'name': track.name,
+                            'type': 'running'
+                        }
 
                     for segment in track.segments:
                         for point in segment.points:
@@ -194,7 +201,7 @@ class UploadGPXView(LoginRequiredMixin, View):
                                 'power': power,
                             })
                 df = pd.DataFrame(filtered_data)
-                print(df)
+
                 distances = []
                 durations = []
                 for i in range(1, len(df)):
@@ -230,7 +237,60 @@ class UploadGPXView(LoginRequiredMixin, View):
 
 
                 name = name_and_data_ofactivity['name']
+                print(name_and_data_ofactivity)
                 type = name_and_data_ofactivity['type']
+                timestamps = []
+                timestamps.append(filtered_data[0]['timestamp'])
+                distances = []
+                sumof = 0
+                durations = []
+                for i in range(1, len(filtered_data)):
+                    distance = calculate_distance(
+                        filtered_data[i - 1]['latitude'], filtered_data[i - 1]['longitude'],
+                        filtered_data[i]['latitude'], filtered_data[i]['longitude']
+                    )
+                    sumof += distance
+                    if sumof > 1000:
+                        timestamp = filtered_data[i]['timestamp']
+                        timestamps.append(timestamp)
+                        duration = (timestamp - timestamps[-2]).seconds
+                        durations.append(duration)
+                        sumof = 0
+
+                    distances.append(distance)
+                sumof_distance = sum(distances)
+                x_axis = []
+
+                for i in range(round(sum(distances) / 1000)):
+                    x_axis.append(i + 1)
+                y_axis = []
+                for duration in durations:
+                    minutes, seconds = divmod(duration, 60)
+                    y_axis.append(f'{minutes}:{seconds}')
+
+                fig, ax = plt.subplots()
+                bars = ax.barh(y_axis, durations, color='blue')
+                # plt.axis('off')  # Turn off the axis
+
+                # Add pace labels on the bars
+                for i, bar in enumerate(bars):
+                    pace_label = f'{durations[i] // 60}:{durations[i] % 60:02d}'  # Convert duration to MM:SS format
+                    ax.text(bar.get_width(), bar.get_y() + bar.get_height() / 2, pace_label,
+                            ha='left', va='center', color='white', fontsize=8)
+                ax.xaxis.set_visible(False)
+                ax.spines['top'].set_visible(False)
+                ax.spines['right'].set_visible(False)
+                ax.spines['bottom'].set_visible(False)
+                ax.spines['left'].set_visible(False)
+                plt.title('Splits')
+                plt.subplots_adjust(left=0.8)
+                ax.yaxis.set_ticks_position('none')
+
+                chart_buffer = io.BytesIO()
+                plt.savefig(chart_buffer, format='png')
+                chart_buffer.seek(0)
+                plt.close()
+                # chart_file = File(chart_buffer, name=f'pace_chart_{activity.pk}.png')
 
                 activity = ActivityData.objects.create(
                     distance=f'{(total_distance / 1000):.2f}km',
@@ -240,7 +300,12 @@ class UploadGPXView(LoginRequiredMixin, View):
                     type= type,
                     user=request.user,
 
+
                 )
+                activity.pace_chart_image.save(f'pace_chart_{activity.id}.png', File(chart_buffer))
+
+                # Save the activity
+                activity.save()
 
 
 
@@ -316,7 +381,7 @@ def map_view(request):
 from io import BytesIO
 import base64
 class ActivityMapView(View):
-    template_name = 'activities/activity.html'
+    template_name = 'profile/details_user'
 
     def get(self, request, *args, **kwargs):
         # Fetch all activities with related GPS data

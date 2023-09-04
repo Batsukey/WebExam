@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+html, body, .img {
+    height: 100%;
+}
 label {
     width: 100px;
 }
@@ -73,6 +77,12 @@ li {
     border: lightskyblue solid;
     border-radius: 5px;
     cursor: pointer;
+}
+.btn{
+    background-color: deepskyblue;
+}
+.btn-primary{
+    border-color: deepskyblue;
 }
 .create {
     display: block;
@@ -151,7 +161,58 @@ li {
     padding: 5px;
     margin: 5px;
 }
+.edit-delete-div{
+    margin: 10px;
+}
+.registration-form{
+    height: 500px;
+    padding: 20px;
+    background: lightblue;
 
+}
+.home-img{
+    width: 400px;
+    height: auto;
+}
+.login-register{
+    height: 250px;
+    padding: 20px;
+    background: lightblue;
+    color: white;
+    border: 1px lightblue solid;
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    /*margin-top: 130px;*/
+}
+.footer-icons a{
+    color: white;
+}
+.home-img{
+    width: 300px;
+    height: auto;
+}
+.sign-up-form{
+    height: 350px;
+    padding: 20px;
+    background: lightblue;
+
+}
+.form-reg{
+    padding: 20px;
+    margin-top: -50px;
+    margin-bottom: 50px;
+    color: white;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+
+}
+.form-sign{
+    padding: 20px;
+    margin-top: -50px;
+    margin-bottom: 50px;
+    color: white;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+}
 .gps-upload
     {
     display: block;
@@ -174,10 +235,15 @@ li {
 .stat{
     display: flex;
     justify-content: space-evenly;
+
 }
 .each{
     display: flex;
     flex-direction: column;
+}
+.each-title{
+    font-size: 12px;
+    color: #888888 ;
 }
 
 .activity-image{
@@ -194,9 +260,6 @@ li {
     background-repeat: no-repeat;
     background-position: top;
     background-attachment: fixed;}
-.img {
-    background-image: url("https://i.imgur.com/84aNRnQ.jpg");
-}
 
 .bell-icon{
     display: inline-block;
@@ -276,8 +339,8 @@ li {
 .navbar-dropdown :hover {
     cursor: pointer;
     display: block;
-    border-left: 1px solid #ccc; /* Add left border */
-    border-right: 1px solid #ccc; /* Add right border */ /* Add rounded corners at the bottom */
+    /*border-left: 1px solid #ccc; !* Add left border *!*/
+    /*border-right: 1px solid #ccc; !* Add right border *! !* Add rounded corners at the bottom *!*/
 
 }
 
@@ -316,5 +379,6 @@ li {
 
 .profile-container:hover .dropdown-content {
     display: block;
+    border: 1px darkslateblue solid;
 }
 

@@ -26,7 +26,7 @@
                                     <div style="color: darkslategray; font-size: 12px">{{ combined_activity.timestamp }}</div>
                                 </div>
                             </div>
-                            <div><a class="edit-delete" style="font-size:20px;
+                            <div class="edit-delete-div"><a class="edit-delete" style="font-size:20px;
     color: darkslateblue;
     padding: 3px;
     margin: 3px;" href="{% url 'delete_activity' combined_activity.activity_type combined_activity.id %}"
@@ -49,53 +49,57 @@
                             <div class="stat">
 
                                 <div class="each">
-                                    <div>Distance</div>
+                                    <div class="each-title">Distance</div>
                                     <h5>{{ combined_activity.distance }} km</h5>
                                 </div>
                                 <div class="each">
-                                    <div>Pace:</div>
+                                    <div class="each-title">Pace:</div>
                                     <h5>{{ combined_activity.pace }} min/km</h5>
                                 </div>
                                 <div class="each">
-                                    <div>Time:</div>
+                                    <div class="each-title">Time:</div>
                                     <h5>{{ combined_activity.duration }}</h5>
                                 </div>
                             </div>
                         {% elif combined_activity.activity_type == 'Cycling' %}
-                            <div class="road">Location : {{ combined_activity.route }}</div>
+
+                             <div><img src="{% static 'images/bycicle.png' %}"style="height: 30px; margin-top: -80px; margin-left: 20px" alt=""></div>
+
+                            <div class="road" style="margin: -35px 0 20px 15px;">Location : {{ combined_activity.route }}</div>
 
 
 
                             <div class="stat">
 
                                 <div class="each">
-                                    <div>Distance</div>
+                                    <div class="each-title">Distance</div>
                                     <h5>{{ combined_activity.distance }} km</h5>
                                 </div>
                                 <div class="each">
-                                    <div>Speed:</div>
+                                    <div class="each-title">Speed:</div>
                                     <h5>{{ combined_activity.avg_speed }}km/h</h5>
                                 </div>
                                 <div class="each">
-                                    <div>Time:</div>
+                                    <div class="each-title">Time:</div>
                                     <h5>{{ combined_activity.duration }}</h5>
                                 </div>
 
                             </div>
 
                         {% elif combined_activity.activity_type == 'Swimming' %}
+                            <div><img src="{% static 'images/shoe.png' %}"style="height: 30px; margin-top: -80px; margin-left: 20px" alt=""></div>
                             <div class="stat">
 
                                 <div class="each">
-                                    <div>Distance</div>
+                                    <div class="each-title">Distance</div>
                                     <h5>{{ combined_activity.distance }} m</h5>
                                 </div>
                                 <div class="each">
-                                    <div>Pool lenght:</div>
+                                    <div class="each-title">Pool lenght:</div>
                                     <h5>{{ combined_activity.pool_length }} m</h5>
                                 </div>
                                 <div class="each">
-                                    <div>Laps:</div>
+                                    <div class="each-title">Laps:</div>
                                     <h5>{{ combined_activity.laps }}</h5>
                                 </div>
                             </div>

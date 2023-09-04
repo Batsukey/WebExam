@@ -1,3 +1,5 @@
+import datetime
+
 from PIL import Image
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -5,6 +7,8 @@ from datetime import timedelta
 
 from XroutS.core.models import AppUser
 from XroutS.functionalities.models import Like
+
+
 
 UserModel = get_user_model()
 
@@ -40,6 +44,8 @@ class BaseActivity(models.Model):
     )
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
+    date_of_activity = models.DateField(blank=True, null=True)
+    time = models.CharField(max_length=10, null=True, blank=True)  # Store time as "HH:MM AM/PM"
     distance = models.FloatField()
     duration = models.DurationField()
     title = models.CharField(max_length=30)
@@ -62,6 +68,7 @@ class BaseActivity(models.Model):
             if img.width > max_size[0] or img.height > max_size[1]:
                 img.thumbnail(max_size)
                 img.save(self.picture.path)
+
 
 
 class RunningActivity(BaseActivity):
@@ -92,6 +99,7 @@ class ActivityData(models.Model):
     distance = models.CharField()
     duration = models.CharField()
     pace = models.CharField()
+    pace_chart_image = models.ImageField(upload_to='pace_charts/', blank=True, null=True)
 
 class GPSData(models.Model):
     activity = models.ForeignKey(ActivityData, on_delete=models.CASCADE, null=True)

@@ -23,9 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+DEBUG = bool(os.environ.get("DEBUG", default=0))
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+print(os.getenv('SECRET_KEY'))
 
 DATABASES = {
     "default": {
@@ -33,7 +35,7 @@ DATABASES = {
         "NAME": os.getenv('DB_NAME', 'XroutS-database'),
         "USER": os.getenv('DB_USER', 'postgres-user'),
         "PASSWORD": os.getenv('DB_PASSWORD', 'taralej1'),
-        "HOST": os.getenv('DB_HOST', '127.0.0.1'),
+        "HOST": os.getenv('DB_HOST', 'postgres'),
         "PORT": os.getenv('DB_PORT', '5432'),
     }
 }
@@ -132,6 +134,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     BASE_DIR / 'staticfiles/',
 )
+STATIC_ROOT = os.getenv('STATIC_ROOT')
 
 MEDIA_URL = '/media/'
 

@@ -1,8 +1,8 @@
 {% extends 'base/base.html' %}
 {% block title %}registration{% endblock %}
 {% block content %}
-    <div style="display: flex;justify-content: center;flex-direction: column;align-content: center; align-items: center">
-        <form action="{% url 'register_user' %}" style="display: flex ;margin-top: 100px; flex-direction: column" method="post">
+    <div  class='registration-form'style="display: flex;justify-content: center;flex-direction: column;align-content: center; align-items: center">
+        <form class='form-reg'action="{% url 'register_user' %}" style="display: flex ;margin-top: 100px; flex-direction: column" method="post">
             <h3>Create your account</h3>
             {% for field in form %}
                 <div class="form-group">

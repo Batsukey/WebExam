@@ -12,6 +12,11 @@ Activity Map
         <p>{{ activity.distance }}</p>
         <p>{{ activity.duration }}</p>
         <p>{{ activity.pace }}</p>
+        {% if activity.pace_chart_image.url %}
+        <img src="{{ activity.pace_chart_image.url }}" style='height: 150px' alt="Pace Chart">
+        {% else %}
+        HI
+        {% endif %}
         <!-- Embed the map here -->
         <div id="map_{{ activity.id }}" class="activity-map-container"></div>
     </div>
@@ -31,13 +36,6 @@ Activity Map
         }).addTo(map);
 
         // Add markers for GPS data points
-         var gpsCoordinates = [
-            {% for data in gps_data %}
-                [{{ data.latitude }}, {{ data.longitude }}],
-            {% endfor %}
-        ];
-        L.polyline(gpsCoordinates, {
-            color: 'red',
-        }).addTo(map);
+
     </script>
 {% endblock %}
